@@ -27,7 +27,7 @@ use App\Http\Controllers\SuperAdmin\AdminController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-// Auth::loginUsingId(34);
+// Auth::loginUsingId(1);
 
 Route::get('/bukuHome', [BukuController::class, 'bukuHome']);
 Route::get('/lihatUser', [MeController::class, 'lihat']);

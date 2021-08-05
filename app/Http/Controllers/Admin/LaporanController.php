@@ -11,6 +11,7 @@ class LaporanController extends Controller
 {
     public function index()
     {
+        date_default_timezone_set('Asia/Jakarta');
         $transaksi = Transaksi::whereDate('tgl_peminjaman', [now()])->where('status', 1)->orderBy('id', 'DESC')->get();
         return response()->json([
             'data' => TransaksiResource::collection($transaksi),

@@ -77,7 +77,7 @@ class TransaksiController extends Controller
             ]);
             $buku = Buku::where('id', request('buku_id'))->first();
             $buku->update([
-                'jumlah' => $buku->jumlah - 1
+                'jumlah' => $buku->jumlah - 1,
             ]);
         }else{
             Transaksi::create([

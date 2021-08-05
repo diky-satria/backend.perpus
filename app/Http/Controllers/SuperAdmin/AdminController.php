@@ -8,6 +8,7 @@ use App\Models\Jurusan;
 use App\Models\Mahasiswa;
 use App\Models\Transaksi;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 
 class AdminController extends Controller
@@ -18,13 +19,20 @@ class AdminController extends Controller
         $jurusan = Jurusan::all()->count();
         $buku = Buku::all()->count();
         $transaksi = Transaksi::where('status', 0)->count();
+        $chartLine = DB::SELECT("SELECT tgl_peminjaman, SUM(jumlah) jumlah FROM transaksis 
+                                GROUP BY tgl_peminjaman ORDER BY tgl_peminjaman DESC LIMIT 15");
+        $chartPie = DB::SELECT("SELECT bukus.judul, SUM(pinjams.jumlah) AS jumlahPinjam
+                                FROM pinjams LEFT JOIN bukus ON pinjams.buku_id=bukus.id
+                                GROUP BY judul ORDER BY jumlahPinjam DESC LIMIT 5");
 
         return response()->json([
+            'chartPie' => $chartPie,
             'message' => 'hitung data',
             'mahasiswa' => $mahasiswa,
             'jurusan' => $jurusan,
             'buku' => $buku,
-            'transaksi' => $transaksi
+            'transaksi' => $transaksi,
+            'chartLine' => $chartLine,
         ]);
     }
 
